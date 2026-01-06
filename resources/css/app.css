@@ -1,0 +1,41 @@
+/* public/css/style.css */
+
+/* Gaya Kustom untuk menyesuaikan warna mockup (Coklat/Oranye) */
+:root {
+    --primary-color: #A0522D; /* Coklat Tua */
+    --secondary-color: #FF8C00; /* Oranye */
+    --light-bg: #FFF8E1; /* Latar Belakang Krem */
+}
+.header-bg { background-color: var(--primary-color); color: white; }
+.btn-aksi { background-color: var(--secondary-color); border-color: var(--secondary-color); color: white; }
+.card { border-radius: 15px; }
+.footer-bg { background-color: #5D4037; color: white; padding: 20px 0; }
+.social-card-ig { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); color: white; }
+.social-card-wa { background-color: #25D366; color: white; }
+.social-card-shopee { background-color: #EE4D2D; color: white; }
+
+/* Gaya Sidebar (Navigasi Admin) */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #3e2723; /* Darker Brown */
+    padding-top: 56px; /* Sesuai tinggi navbar */
+    color: white;
+}
+.sidebar .nav-link {
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+.sidebar .nav-link:hover {
+    background-color: var(--primary-color);
+}
+.main-content {
+    margin-left: 250px; /* Offset dari sidebar */
+    padding: 20px;
+    background-color: var(--light-bg);
+    min-height: 100vh;
+}
