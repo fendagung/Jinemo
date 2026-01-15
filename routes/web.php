@@ -6,8 +6,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\Admin\PesananController;
 // Pastikan path ini benar. Jika controller Anda di dalam folder Admin:
 use App\Http\Controllers\Admin\KatalogController;
-// Jika controller Anda TIDAK di dalam folder Admin:
-// use App\Http\Controllers\KatalogController; 
+use App\Http\Controllers\ReviewController;
 
 
 /*
@@ -37,7 +36,7 @@ Route::post('checkout', [CartController::class, 'checkout'])->name('checkout');
 
 // --- AUTHENTICATION ROUTES (MANUAL) ---
 use App\Http\Controllers\Auth\LoginController;
-Route::post('/review', [App\Http\Controllers\ReviewController::class, 'store'])->name('review.store');
+Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
