@@ -70,10 +70,8 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Keranjang kosong!');
         }
 
-        // Check if user is logged in
-        if (!Auth::check()) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk checkout.');
-        }
+        // Check if user is logged in (Optional for guest checkout)
+        // Removed Auth::check() to allow guests to checkout
 
         DB::beginTransaction();
         try {
