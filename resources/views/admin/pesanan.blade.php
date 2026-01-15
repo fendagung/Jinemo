@@ -31,7 +31,10 @@
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
                                         <td>{{ $pesanan->created_at->format('d M Y H:i') }}</td>
-                                        <td>{{ $pesanan->user->name ?? 'Guest' }}</td>
+                                        <td>
+                                            <strong>{{ $pesanan->nama_pelanggan ?? ($pesanan->user->name ?? 'Guest') }}</strong><br>
+                                            <span class="badge bg-primary">Meja: {{ $pesanan->nomor_meja ?? '-' }}</span>
+                                        </td>
                                         <td>
                                             <ul class="list-unstyled mb-0">
                                                 @foreach($pesanan->details as $detail)

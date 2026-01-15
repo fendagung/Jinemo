@@ -81,14 +81,31 @@
                         </table>
                     </div>
 
-                    <div class="d-flex justify-content-between mt-4">
-                        <a href="{{ url('/') }}" class="btn btn-outline-secondary"><i class="fas fa-arrow-left me-2"></i> Lanjut
-                            Belanja</a>
-                        <form action="{{ route('checkout') }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-warning fw-bold px-5 text-dark">Checkout Sekarang <i
-                                    class="fas fa-arrow-right ms-2"></i></button>
-                        </form>
+                    <div class="row mt-4 justify-content-end">
+                        <div class="col-md-4">
+                            <form action="{{ route('checkout') }}" method="POST">
+                                @csrf
+                                <div class="mb-3">
+                                    <label class="form-label fw-bold">Nama Lengkap Pemesan</label>
+                                    <input type="text" name="nama_pelanggan" class="form-control" placeholder="Contoh: Budi Santoso" required>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label fw-bold">Nomor Meja</label>
+                                    <select name="nomor_meja" class="form-select" required>
+                                        <option value="" selected disabled>Pilih Nomor Meja</option>
+                                        @for($i = 1; $i <= 20; $i++)
+                                            <option value="{{ $i }}">Meja Nomor {{ $i }}</option>
+                                        @endfor
+                                        <option value="Take Away">Bawa Pulang (Take Away)</option>
+                                    </select>
+                                </div>
+                                <div class="d-grid d-md-flex justify-content-md-between gap-2">
+                                    <a href="{{ url('/') }}" class="btn btn-outline-secondary w-100"><i class="fas fa-arrow-left me-2"></i> Kembali</a>
+                                    <button type="submit" class="btn btn-warning fw-bold px-4 text-dark w-100">Checkout Sekarang <i
+                                            class="fas fa-arrow-right ms-2"></i></button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                 @else

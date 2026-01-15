@@ -11,6 +11,8 @@ class Pesanan extends Model
 
     protected $fillable = [
         'user_id',
+        'nama_pelanggan',
+        'nomor_meja',
         'tanggal_pesanan',
         'status',
         'total_harga',

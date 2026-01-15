@@ -73,11 +73,19 @@ class CartController extends Controller
         // Check if user is logged in (Optional for guest checkout)
         // Removed Auth::check() to allow guests to checkout
 
+        // Validate Request
+        $request->validate([
+            'nama_pelanggan' => 'required|string|max:255',
+            'nomor_meja' => 'required',
+        ]);
+
         DB::beginTransaction();
         try {
             // Create Pesanan
             $pesanan = new Pesanan();
             $pesanan->user_id = Auth::id();
+            $pesanan->nama_pelanggan = $request->nama_pelanggan;
+            $pesanan->nomor_meja = $request->nomor_meja;
             $pesanan->tanggal_pesanan = now();
             $pesanan->status = 'Menunggu Konfirmasi';
             $pesanan->total_harga = 0; // Will calculate below

@@ -13,6 +13,8 @@ return new class extends Migration {
         Schema::create('pesanans', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->string('nama_pelanggan')->nullable();
+            $table->string('nomor_meja')->nullable();
             $table->dateTime('tanggal_pesanan');
             $table->string('status')->default('Menunggu Konfirmasi');
             $table->integer('total_harga');
