@@ -159,38 +159,20 @@
                         </a>
                     </li>
 
+                    {{-- Removed Login/Register for customers as per request --}}
                     @auth
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-dark fw-bold" href="#" id="navbarDropdown" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-user-circle me-1 text-warning"></i> {{ Auth::user()->name }}
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 mt-2"
-                                aria-labelledby="navbarDropdown">
-                                @if(Auth::user()->role === 'admin')
-                                    <li><a class="dropdown-item py-2 fw-medium" href="{{ route('admin.dashboard') }}"><i
-                                                class="fas fa-chart-line me-2 text-primary"></i> Dashboard</a></li>
-                                    <li>
-                                        <hr class="dropdown-divider">
-                                    </li>
-                                @endif
-                                <li>
-                                    <form action="{{ route('logout') }}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item py-2 fw-medium text-danger"><i
-                                                class="fas fa-sign-out-alt me-2"></i> Logout</button>
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @else
-                        <li class="nav-item me-2">
-                            <a class="btn btn-outline-warning text-dark fw-bold rounded-pill px-3"
-                                href="{{ route('login') }}">Login</a>
-                        </li>
+                        @if(Auth::user()->role === 'admin')
+                            <li class="nav-item me-2">
+                                <a class="btn btn-outline-warning text-dark fw-bold rounded-pill px-3"
+                                    href="{{ route('admin.dashboard') }}">Dashboard</a>
+                            </li>
+                        @endif
                         <li class="nav-item">
-                            <a class="btn btn-warning text-white fw-bold rounded-pill px-3" href="{{ route('register') }}"
-                                style="background-color: #FFC107; color: #3E2723 !important;">Daftar</a>
+                            <form action="{{ route('logout') }}" method="POST">
+                                @csrf
+                                <button type="submit"
+                                    class="btn btn-danger text-white fw-bold rounded-pill px-3">Logout</button>
+                            </form>
                         </li>
                     @endauth
                 </ul>
@@ -360,8 +342,10 @@
                 </div>
             </div>
             <div class="border-top border-secondary mt-4 pt-4 text-center small text-white-50">
-                &copy; {{ date('Y') }} Jinemo Restoran Prasmanan. All rights reserved. | <a
-                    href="https://github.com/fenditusagung/Jinemo.git" target="_blank" class="text-warning">GitHub
+                &copy; {{ date('Y') }} Jinemo Restoran Prasmanan. All rights reserved. |
+                <a href="{{ route('login') }}" class="text-white-50 text-decoration-none small"><i
+                        class="fas fa-lock me-1"></i> Admin Login</a> |
+                <a href="https://github.com/fenditusagung/Jinemo.git" target="_blank" class="text-warning">GitHub
                     Repo</a>
             </div>
         </div>
