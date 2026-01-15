@@ -55,10 +55,11 @@
                                         <td>Rp {{ number_format($details['price'], 0, ',', '.') }}</td>
                                         <td>
                                             <input type="number" name="quantities[{{ $id }}]" form="checkout-form"
-                                                value="{{ $details['quantity'] }}" class="form-control quantity update-cart" min="1"
+                                                value="{{ $details['quantity'] }}" data-price="{{ $details['price'] }}" 
+                                                class="form-control quantity update-cart" min="1"
                                                 style="width: 80px;">
                                         </td>
-                                        <td class="text-center fw-bold">Rp
+                                        <td class="text-center fw-bold text-subtotal">Rp
                                             {{ number_format($details['price'] * $details['quantity'], 0, ',', '.') }}
                                         </td>
                                         <td class="text-end">
@@ -75,7 +76,7 @@
                             <tfoot class="table-light">
                                 <tr>
                                     <td colspan="3" class="text-end fw-bold fs-5">Total Belanja:</td>
-                                    <td class="text-center fw-bold fs-5 text-warning">Rp
+                                    <td class="text-center fw-bold fs-5 text-warning" id="total-belanja">Rp
                                         {{ number_format($total, 0, ',', '.') }}
                                     </td>
                                     <td></td>
@@ -124,6 +125,58 @@
         </div>
     </div>
 
-    <script type="text/javascript">     $(".update-cart").change(function (e) {         e.preventDefault();         var ele = $(this);         $.ajax({             url: '{{ route('cart.update') }}',             method: "patch",             data: {                 _token: '{{ csrf_token() }}',                 id: ele.parents("tr").attr("data-id"),                 quantity: ele.parents("tr").find(".quantity").val()             },             success: function (response) {                 window.location.reload();             }         });     });
+    <script type="text/javascript">
+        $(document).ready(function() {
+            // Function to recalculate all totals
+            function recalculateCart() {
+                var grandTotal = 0;
+                
+                $(".update-cart").each(function() {
+                    var input = $(this);
+                    var price = parseFloat(input.attr("data-price"));
+                    var qty = parseInt(input.val());
+                    
+                    if (isNaN(qty) || qty < 1) qty = 1;
+                    
+                    var subtotal = price * qty;
+                    grandTotal += subtotal;
+                    
+                    // Update subtotal text for this row
+                    input.parents("tr").find(".text-subtotal").text("Rp " + subtotal.toLocaleString('id-ID'));
+                });
+                
+                // Update grand total text
+                $("#total-belanja").text("Rp " + grandTotal.toLocaleString('id-ID'));
+            }
+
+            // Initial calculation on page load
+            recalculateCart();
+
+            // Sync with server via AJAX (debounce to avoid too many requests)
+            let timeout = null;
+            $(".update-cart").on('input change', function (e) {
+                var ele = $(this);
+                
+                // 1. Update UI Immediately
+                recalculateCart();
+                
+                // 2. Debounce AJAX call
+                clearTimeout(timeout);
+                timeout = setTimeout(function() {
+                    $.ajax({
+                        url: '{{ route('cart.update') }}',
+                        method: "patch",
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            id: ele.parents("tr").attr("data-id"),
+                            quantity: ele.val()
+                        },
+                        success: function (response) {
+                            console.log("Cart synced with server");
+                        }
+                    });
+                }, 500);
+            });
+        });
     </script>
 @endsection
