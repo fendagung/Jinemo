@@ -57,6 +57,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         $pendingOrdersCount = \App\Models\Pesanan::where('status', 'Menunggu Konfirmasi')->count();
         return view('admin.dashboard', compact('pendingOrdersCount'));
     })->name('dashboard');
+    Route::post('/review', [App\Http\Controllers\ReviewController::class, 'store'])->name('review.store');
 
     // 2. DAFTAR MENU (Route Resource Penuh)
     // URL: /admin/daftar-menu (Menggantikan /admin/katalog)

@@ -130,7 +130,27 @@
             color: var(--light-cream);
             padding: 40px 0;
             margin-top: 50px;
-        }
+
+            .star-rating {
+                font-size: 1.5rem;
+            }
+
+            .star-rating input {
+                display: none;
+            }
+
+            .star-rating label {
+                color: #ddd;
+                cursor: pointer;
+                transition: all 0.2s ease;
+                margin: 0 2px;
+            }
+
+            .star-rating input:checked~label,
+            .star-rating label:hover,
+            .star-rating label:hover~label {
+                color: #FFC107;
+            }
     </style>
 </head>
 
@@ -258,16 +278,95 @@
 
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <span class="menu-price">Rp {{ number_format($menu->harga, 0, ',', '.') }}</span>
-                                <span class="text-warning small"><i class="fas fa-star"></i> 5.0</span>
+                                <div class="text-warning small d-flex align-items-center">
+                                    <i class="fas fa-star me-1"></i>
+                                    <span>{{ number_format($menu->reviews->avg('rating') ?: 5, 1) }}</span>
+                                    <span class="text-muted ms-1"
+                                        style="font-size: 0.7rem;">({{ $menu->reviews->count() }})</span>
+                                </div>
                             </div>
 
                             {{-- ACTION BUTTONS --}}
-                            <div class="d-grid">
+                            <div class="d-grid gap-2">
                                 <a href="{{ route('add.to.cart', $menu->id) }}"
                                     class="btn btn-success text-white fw-bold rounded-pill shadow-sm py-2">
                                     <i class="fas fa-cart-plus me-2"></i> Pesan Sekarang
                                 </a>
+                                <button type="button" class="btn btn-outline-warning btn-sm rounded-pill fw-bold"
+                                    data-bs-toggle="modal" data-bs-target="#reviewModal{{ $menu->id }}">
+                                    <i class="fas fa-comment-dots me-1"></i> Beri Ulasan
+                                </button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Modal -->
+                <div class="modal fade" id="reviewModal{{ $menu->id }}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content border-0 shadow">
+                            <div class="modal-header header-bg text-white border-0">
+                                <h5 class="modal-title fw-bold">Ulasan untuk: {{ $menu->nama_menu }}</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form action="{{ route('review.store') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="menu_id" value="{{ $menu->id }}">
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Nama Anda</label>
+                                        <input type="text" name="nama_pelanggan" class="form-control"
+                                            placeholder="Masukkan nama Anda" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Rating</label>
+                                        <div class="star-rating d-flex flex-row-reverse justify-content-center">
+                                            <input type="radio" id="star5-{{ $menu->id }}" name="rating" value="5"
+                                                required /><label for="star5-{{ $menu->id }}"><i
+                                                    class="fas fa-star"></i></label>
+                                            <input type="radio" id="star4-{{ $menu->id }}" name="rating" value="4" /><label
+                                                for="star4-{{ $menu->id }}"><i class="fas fa-star"></i></label>
+                                            <input type="radio" id="star3-{{ $menu->id }}" name="rating" value="3" /><label
+                                                for="star3-{{ $menu->id }}"><i class="fas fa-star"></i></label>
+                                            <input type="radio" id="star2-{{ $menu->id }}" name="rating" value="2" /><label
+                                                for="star2-{{ $menu->id }}"><i class="fas fa-star"></i></label>
+                                            <input type="radio" id="star1-{{ $menu->id }}" name="rating" value="1" /><label
+                                                for="star1-{{ $menu->id }}"><i class="fas fa-star"></i></label>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Komentar</label>
+                                        <textarea name="komentar" class="form-control" rows="3"
+                                            placeholder="Apa pendapat Anda tentang menu ini?" required></textarea>
+                                    </div>
+
+                                    @if($menu->reviews->count() > 0)
+                                        <hr>
+                                        <h6 class="fw-bold mb-3">Ulasan Terbaru:</h6>
+                                        <div style="max-height: 200px; overflow-y: auto;">
+                                            @foreach($menu->reviews()->latest()->take(5)->get() as $review)
+                                                <div class="mb-3 pb-2 border-bottom">
+                                                    <div class="d-flex justify-content-between mb-1">
+                                                        <span class="fw-bold small">{{ $review->nama_pelanggan }}</span>
+                                                        <span class="text-warning small">
+                                                            @for($i = 1; $i <= 5; $i++)
+                                                                <i class="fa{{ $i <= $review->rating ? 's' : 'r' }} fa-star"></i>
+                                                            @endfor
+                                                        </span>
+                                                    </div>
+                                                    <p class="small text-muted mb-0">{{ $review->komentar }}</p>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                </div>
+                                <div class="modal-footer border-0">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Tutup</button>
+                                    <button type="submit" class="btn btn-warning fw-bold text-dark px-4">Kirim
+                                        Ulasan</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

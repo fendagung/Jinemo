@@ -18,4 +18,8 @@ class Menu extends Model
         'deskripsi',
         'gambar',
     ];
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 }
