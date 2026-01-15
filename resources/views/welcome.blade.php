@@ -130,27 +130,28 @@
             color: var(--light-cream);
             padding: 40px 0;
             margin-top: 50px;
+        }
 
-            .star-rating {
-                font-size: 1.5rem;
-            }
+        .star-rating {
+            font-size: 1.5rem;
+        }
 
-            .star-rating input {
-                display: none;
-            }
+        .star-rating input {
+            display: none;
+        }
 
-            .star-rating label {
-                color: #ddd;
-                cursor: pointer;
-                transition: all 0.2s ease;
-                margin: 0 2px;
-            }
+        .star-rating label {
+            color: #ddd;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin: 0 2px;
+        }
 
-            .star-rating input:checked~label,
-            .star-rating label:hover,
-            .star-rating label:hover~label {
-                color: #FFC107;
-            }
+        .star-rating input:checked~label,
+        .star-rating label:hover,
+        .star-rating label:hover~label {
+            color: #FFC107;
+        }
     </style>
 </head>
 

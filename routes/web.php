@@ -37,6 +37,7 @@ Route::post('checkout', [CartController::class, 'checkout'])->name('checkout');
 
 // --- AUTHENTICATION ROUTES (MANUAL) ---
 use App\Http\Controllers\Auth\LoginController;
+Route::post('/review', [App\Http\Controllers\ReviewController::class, 'store'])->name('review.store');
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
@@ -57,7 +58,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
         $pendingOrdersCount = \App\Models\Pesanan::where('status', 'Menunggu Konfirmasi')->count();
         return view('admin.dashboard', compact('pendingOrdersCount'));
     })->name('dashboard');
-    Route::post('/review', [App\Http\Controllers\ReviewController::class, 'store'])->name('review.store');
 
     // 2. DAFTAR MENU (Route Resource Penuh)
     // URL: /admin/daftar-menu (Menggantikan /admin/katalog)
