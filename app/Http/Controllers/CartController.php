@@ -70,6 +70,16 @@ class CartController extends Controller
             return redirect()->back()->with('error', 'Keranjang kosong!');
         }
 
+        // Sinkronisasi jumlah dari input langsung saat checkout
+        if ($request->has('quantities')) {
+            foreach ($request->quantities as $id => $qty) {
+                if (isset($cart[$id])) {
+                    $cart[$id]['quantity'] = max(1, (int) $qty);
+                }
+            }
+            session()->put('cart', $cart);
+        }
+
         // Check if user is logged in (Optional for guest checkout)
         // Removed Auth::check() to allow guests to checkout
 

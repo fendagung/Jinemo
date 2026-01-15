@@ -54,11 +54,13 @@
                                         </td>
                                         <td>Rp {{ number_format($details['price'], 0, ',', '.') }}</td>
                                         <td>
-                                            <input type="number" value="{{ $details['quantity'] }}"
-                                                class="form-control quantity update-cart" min="1" style="width: 80px;">
+                                            <input type="number" name="quantities[{{ $id }}]" form="checkout-form"
+                                                value="{{ $details['quantity'] }}" class="form-control quantity update-cart" min="1"
+                                                style="width: 80px;">
                                         </td>
                                         <td class="text-center fw-bold">Rp
-                                            {{ number_format($details['price'] * $details['quantity'], 0, ',', '.') }}</td>
+                                            {{ number_format($details['price'] * $details['quantity'], 0, ',', '.') }}
+                                        </td>
                                         <td class="text-end">
                                             <form action="{{ route('cart.remove') }}" method="POST">
                                                 @csrf
@@ -74,7 +76,8 @@
                                 <tr>
                                     <td colspan="3" class="text-end fw-bold fs-5">Total Belanja:</td>
                                     <td class="text-center fw-bold fs-5 text-warning">Rp
-                                        {{ number_format($total, 0, ',', '.') }}</td>
+                                        {{ number_format($total, 0, ',', '.') }}
+                                    </td>
                                     <td></td>
                                 </tr>
                             </tfoot>
@@ -83,11 +86,12 @@
 
                     <div class="row mt-4 justify-content-end">
                         <div class="col-md-4">
-                            <form action="{{ route('checkout') }}" method="POST">
+                            <form action="{{ route('checkout') }}" method="POST" id="checkout-form">
                                 @csrf
                                 <div class="mb-3">
                                     <label class="form-label fw-bold">Nama Lengkap Pemesan</label>
-                                    <input type="text" name="nama_pelanggan" class="form-control" placeholder="Contoh: Budi Santoso" required>
+                                    <input type="text" name="nama_pelanggan" class="form-control"
+                                        placeholder="Contoh: Budi Santoso" required>
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label fw-bold">Nomor Meja</label>
@@ -100,9 +104,10 @@
                                     </select>
                                 </div>
                                 <div class="d-grid d-md-flex justify-content-md-between gap-2">
-                                    <a href="{{ url('/') }}" class="btn btn-outline-secondary w-100"><i class="fas fa-arrow-left me-2"></i> Kembali</a>
-                                    <button type="submit" class="btn btn-warning fw-bold px-4 text-dark w-100">Checkout Sekarang <i
-                                            class="fas fa-arrow-right ms-2"></i></button>
+                                    <a href="{{ url('/') }}" class="btn btn-outline-secondary w-100"><i
+                                            class="fas fa-arrow-left me-2"></i> Kembali</a>
+                                    <button type="submit" class="btn btn-warning fw-bold px-4 text-dark w-100">Checkout Sekarang
+                                        <i class="fas fa-arrow-right ms-2"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -119,22 +124,6 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        $(".update-cart").change(function (e) {
-            e.preventDefault();
-            var ele = $(this);
-            $.ajax({
-                url: '{{ route('cart.update') }}',
-                method: "patch",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: ele.parents("tr").attr("data-id"),
-                    quantity: ele.parents("tr").find(".quantity").val()
-                },
-                success: function (response) {
-                    window.location.reload();
-                }
-            });
-        });
+    <script type="text/javascript">     $(".update-cart").change(function (e) {         e.preventDefault();         var ele = $(this);         $.ajax({             url: '{{ route('cart.update') }}',             method: "patch",             data: {                 _token: '{{ csrf_token() }}',                 id: ele.parents("tr").attr("data-id"),                 quantity: ele.parents("tr").find(".quantity").val()             },             success: function (response) {                 window.location.reload();             }         });     });
     </script>
 @endsection
