@@ -167,11 +167,13 @@
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 mt-2"
                                 aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item py-2 fw-medium" href="{{ route('admin.dashboard') }}"><i
-                                            class="fas fa-chart-line me-2 text-primary"></i> Dashboard</a></li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
+                                @if(Auth::user()->role === 'admin')
+                                    <li><a class="dropdown-item py-2 fw-medium" href="{{ route('admin.dashboard') }}"><i
+                                                class="fas fa-chart-line me-2 text-primary"></i> Dashboard</a></li>
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                @endif
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
@@ -206,6 +208,20 @@
                     Selamat Datang Di Jinemo Restoran Prasmanan Yogyakarta
                 </marquee>
             </div>
+
+            @if(session('success'))
+                <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+                    {{ session('success') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+                    {{ session('error') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endif
 
             <p class="lead mb-4">Rasakan Kenikmatan Masakan Tradisional dengan Suasana Nyaman</p>
             <a href="#menu" class="btn btn-warning btn-lg rounded-pill px-5 shadow fw-bold">Pesan Sekarang</a>
