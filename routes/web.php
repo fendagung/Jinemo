@@ -42,13 +42,20 @@ Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('login', [LoginController::class, 'login']);
 Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
+// --- REGISTRATION ROUTES ---
+use App\Http\Controllers\Auth\RegisterController;
+
+Route::get('register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('register', [RegisterController::class, 'register']);
+
 // --- AREA ROUTE ADMINISTRATOR CAFE JINEMMO ---
 
-Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function () {
 
     // 1. Dashboard Admin
     Route::get('/dashboard', function () {
-        return view('admin.dashboard');
+        $pendingOrdersCount = \App\Models\Pesanan::where('status', 'Menunggu Konfirmasi')->count();
+        return view('admin.dashboard', compact('pendingOrdersCount'));
     })->name('dashboard');
 
     // 2. DAFTAR MENU (Route Resource Penuh)
@@ -67,6 +74,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // 3. Manajemen Pesanan
     Route::get('/pesanan', [PesananController::class, 'index'])->name('pesanan');
     Route::patch('/pesanan/{id}', [PesananController::class, 'updateStatus'])->name('pesanan.update');
+    Route::delete('/pesanan/{id}', [PesananController::class, 'destroy'])->name('pesanan.destroy');
 
     // 4. Integrasi Sosial Media
     Route::get('/sosmed', function () {

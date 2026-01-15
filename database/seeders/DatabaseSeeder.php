@@ -17,11 +17,39 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $user = User::where('email', 'fendagung515@gmail.com')->first();
-        if (!$user) {
+
+
+        // 1. ADMIN USER
+        $admin = User::where('email', 'fendagung515@gmail.com')->first();
+        if (!$admin) {
             User::create([
                 'name' => 'Fen Agung',
                 'email' => 'fendagung515@gmail.com',
+                'password' => bcrypt('1234'),
+                'role' => 'admin',
+            ]);
+        } else {
+            $admin->update(['role' => 'admin']);
+        }
+
+        // 2. CUSTOMER USER
+        $customer = User::where('email', 'irfantulis26@gmail.com')->first();
+        if (!$customer) {
+            User::create([
+                'name' => 'Irfan Tulis',
+                'email' => 'irfantulis26@gmail.com',
+                'password' => bcrypt('12345678'), // Password updated as requested
+                'role' => 'customer',
+            ]);
+        } else {
+            $customer->update(['role' => 'customer', 'password' => bcrypt('12345678')]);
+        }
+
+        $customer = User::where('email', 'pelanggan@gmail.com')->first();
+        if (!$customer) {
+            User::create([
+                'name' => 'Pelanggan Setia',
+                'email' => 'pelanggan@gmail.com',
                 'password' => bcrypt('1234'),
             ]);
         }

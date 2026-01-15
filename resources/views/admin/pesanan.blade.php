@@ -52,21 +52,33 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <!-- Update Status Form (Simple) -->
-                                            <form action="{{ route('admin.pesanan.update', $pesanan->id) }}" method="POST"
-                                                class="d-inline">
-                                                @csrf
-                                                @method('PATCH')
-                                                <select name="status" class="form-select form-select-sm d-inline-block w-auto"
-                                                    onchange="this.form.submit()">
-                                                    <option value="Menunggu Konfirmasi" {{ $pesanan->status == 'Menunggu Konfirmasi' ? 'selected' : '' }}>Menunggu</option>
-                                                    <option value="Diproses" {{ $pesanan->status == 'Diproses' ? 'selected' : '' }}>Diproses</option>
-                                                    <option value="Selesai" {{ $pesanan->status == 'Selesai' ? 'selected' : '' }}>
-                                                        Selesai</option>
-                                                    <option value="Batal" {{ $pesanan->status == 'Batal' ? 'selected' : '' }}>
-                                                        Batal</option>
-                                                </select>
-                                            </form>
+                                            <div class="d-flex gap-2 align-items-center">
+                                                <!-- Update Status Form (Simple) -->
+                                                <form action="{{ route('admin.pesanan.update', $pesanan->id) }}" method="POST"
+                                                    class="d-inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <select name="status" class="form-select form-select-sm d-inline-block w-auto"
+                                                        onchange="this.form.submit()">
+                                                        <option value="Menunggu Konfirmasi" {{ $pesanan->status == 'Menunggu Konfirmasi' ? 'selected' : '' }}>Menunggu</option>
+                                                        <option value="Diproses" {{ $pesanan->status == 'Diproses' ? 'selected' : '' }}>Diproses</option>
+                                                        <option value="Selesai" {{ $pesanan->status == 'Selesai' ? 'selected' : '' }}>
+                                                            Selesai</option>
+                                                        <option value="Batal" {{ $pesanan->status == 'Batal' ? 'selected' : '' }}>
+                                                            Batal</option>
+                                                    </select>
+                                                </form>
+
+                                                <!-- Delete Form -->
+                                                <form action="{{ route('admin.pesanan.destroy', $pesanan->id) }}" method="POST" 
+                                                    class="d-inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pesanan ini?')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="fas fa-trash"></i> Hapus
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @empty

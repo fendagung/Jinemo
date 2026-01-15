@@ -58,26 +58,25 @@
         }
 
         .icon-circle {
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 18px;
             background-color: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(5px);
         }
 
         .welcome-banner {
             background: url('https://source.unsplash.com/1600x400/?restaurant,luxury') center/cover no-repeat;
-            /* Fallback color if image fails */
             background-color: var(--dark-brown);
             position: relative;
-            border-radius: 15px;
-            padding: 40px;
+            border-radius: 12px;
+            padding: 20px 25px;
             color: white;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
             overflow: hidden;
         }
 
@@ -100,8 +99,8 @@
         .quick-action-btn {
             background-color: white;
             border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 10px;
+            padding: 8px;
             text-align: center;
             transition: all 0.2s;
             height: 100%;
@@ -117,17 +116,17 @@
             background-color: var(--light-cream);
             border-color: var(--secondary-gold);
             color: var(--dark-brown);
-            transform: scale(1.05);
+            transform: scale(1.03);
         }
 
         .quick-action-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
+            font-size: 1.5rem;
+            margin-bottom: 5px;
             color: var(--primary-brown);
         }
 
         .chart-container-card {
-            border-radius: 15px;
+            border-radius: 12px;
             border: none;
         }
     </style>
@@ -139,11 +138,11 @@
     <div class="welcome-banner shadow-sm">
         <div class="welcome-content d-flex justify-content-between align-items-center flex-wrap">
             <div>
-                <h1 class="fw-bold mb-2" style="font-family: 'Playfair Display', serif;">Selamat Datang, Admin!</h1>
-                <p class="mb-0 fs-5 text-white-50">Dashboard Jinemo Restoran Prasmanan</p>
+                <h2 class="fw-bold mb-1" style="font-family: 'Playfair Display', serif;">Selamat Datang, Admin!</h2>
+                <p class="mb-0 fs-6 text-white-50">Dashboard Jinemo Restoran Prasmanan</p>
             </div>
-            <div class="mt-3 mt-md-0">
-                <span class="badge bg-warning text-dark px-3 py-2 rounded-pill shadow-sm">
+            <div class="mt-2 mt-md-0">
+                <span class="badge bg-warning text-dark px-2 py-1 rounded-pill shadow-sm">
                     <i class="fas fa-clock me-1"></i> {{ date('d F Y') }}
                 </span>
             </div>
@@ -151,46 +150,51 @@
     </div>
 
     {{-- 2. QUICK ACTIONS (Aksi Cepat) --}}
-    <h5 class="mb-3 text-secondary fw-bold px-1">Aksi Cepat</h5>
-    <div class="row mb-4">
-        <div class="col-6 col-md-3 mb-3">
+    <h6 class="mb-2 text-secondary fw-bold px-1">Aksi Cepat</h6>
+    <div class="row mb-3">
+        <div class="col-6 col-md-3 mb-2">
             <a href="{{ route('admin.katalog.create') }}" class="quick-action-btn shadow-sm">
                 <i class="fas fa-plus-circle quick-action-icon"></i>
-                <span class="fw-bold">Tambah Menu</span>
+                <span class="small fw-bold">Tambah Menu</span>
             </a>
         </div>
-        <div class="col-6 col-md-3 mb-3">
+        <div class="col-6 col-md-3 mb-2">
             <a href="{{ route('admin.katalog') }}" class="quick-action-btn shadow-sm">
                 <i class="fas fa-book-open quick-action-icon"></i>
-                <span class="fw-bold">Lihat Daftar Menu</span>
+                <span class="small fw-bold">Daftar Menu</span>
             </a>
         </div>
-        <div class="col-6 col-md-3 mb-3">
-            <a href="{{ route('admin.pesanan') }}" class="quick-action-btn shadow-sm">
+        <div class="col-6 col-md-3 mb-2">
+            <a href="{{ route('admin.pesanan') }}" class="quick-action-btn shadow-sm position-relative">
                 <i class="fas fa-receipt quick-action-icon"></i>
-                <span class="fw-bold">Pesanan Masuk</span>
+                <span class="small fw-bold">Pesanan Masuk</span>
+                @if($pendingOrdersCount > 0)
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger shadow">
+                        {{ $pendingOrdersCount }}
+                    </span>
+                @endif
             </a>
         </div>
-        <div class="col-6 col-md-3 mb-3">
+        <div class="col-6 col-md-3 mb-2">
             <a href="{{ route('admin.laporan') }}" class="quick-action-btn shadow-sm">
                 <i class="fas fa-file-invoice-dollar quick-action-icon"></i>
-                <span class="fw-bold">Laporan Harian</span>
+                <span class="small fw-bold">Laporan</span>
             </a>
         </div>
     </div>
 
     {{-- 3. STATISTIK UTAMA --}}
-    <h5 class="mb-3 text-secondary fw-bold px-1">Ringkasan Bisnis</h5>
-    <div class="row mb-4">
+    <h6 class="mb-2 text-secondary fw-bold px-1">Ringkasan Bisnis</h6>
+    <div class="row mb-3">
         {{-- Total Penjualan --}}
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card card-premium bg-gradient-gold-royal shadow h-100 py-3">
-                <div class="card-body">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card card-premium bg-gradient-gold-royal shadow h-100 py-2">
+                <div class="card-body p-3">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1" style="opacity: 0.8">
+                            <div class="text-xs font-weight-bold text-dark text-uppercase mb-1" style="opacity: 0.8; font-size: 0.7rem;">
                                 Penjualan (Hari Ini)</div>
-                            <div class="h4 mb-0 font-weight-bold text-dark">Rp 1.500.000</div>
+                            <div class="h5 mb-0 font-weight-bold text-dark" style="font-size: 1.1rem;">Rp 1.500k</div>
                         </div>
                         <div class="col-auto">
                             <div class="icon-circle bg-dark text-white">
@@ -203,14 +207,14 @@
         </div>
 
         {{-- Produk Terjual --}}
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card card-premium bg-gradient-brand shadow h-100 py-3 text-white">
-                <div class="card-body">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card card-premium bg-gradient-brand shadow h-100 py-2 text-white">
+                <div class="card-body p-3">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-light text-uppercase mb-1" style="opacity: 0.8">
+                            <div class="text-xs font-weight-bold text-light text-uppercase mb-1" style="opacity: 0.8; font-size: 0.7rem;">
                                 Produk Terjual</div>
-                            <div class="h4 mb-0 font-weight-bold">580 Porsi</div>
+                            <div class="h5 mb-0 font-weight-bold" style="font-size: 1.1rem;">580 Porsi</div>
                         </div>
                         <div class="col-auto">
                             <div class="icon-circle bg-white text-primary">
@@ -223,14 +227,14 @@
         </div>
 
         {{-- Pengunjung --}}
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card card-premium bg-gradient-info shadow h-100 py-3 text-white">
-                <div class="card-body">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card card-premium bg-gradient-info shadow h-100 py-2 text-white">
+                <div class="card-body p-3">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-light text-uppercase mb-1" style="opacity: 0.8">
+                            <div class="text-xs font-weight-bold text-light text-uppercase mb-1" style="opacity: 0.8; font-size: 0.7rem;">
                                 Pengunjung (Bulan Ini)</div>
-                            <div class="h4 mb-0 font-weight-bold">450</div>
+                            <div class="h5 mb-0 font-weight-bold" style="font-size: 1.1rem;">450</div>
                         </div>
                         <div class="col-auto">
                             <div class="icon-circle bg-white text-info">
@@ -243,14 +247,14 @@
         </div>
 
         {{-- Menu Aktif --}}
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card card-premium bg-gradient-danger shadow h-100 py-3 text-white">
-                <div class="card-body">
+        <div class="col-xl-3 col-md-6 mb-3">
+            <div class="card card-premium bg-gradient-danger shadow h-100 py-2 text-white">
+                <div class="card-body p-3">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-light text-uppercase mb-1" style="opacity: 0.8">
+                            <div class="text-xs font-weight-bold text-light text-uppercase mb-1" style="opacity: 0.8; font-size: 0.7rem;">
                                 Total Menu Aktif</div>
-                            <div class="h4 mb-0 font-weight-bold">12 Item</div>
+                            <div class="h5 mb-0 font-weight-bold" style="font-size: 1.1rem;">12 Item</div>
                         </div>
                         <div class="col-auto">
                             <div class="icon-circle bg-white text-danger">
@@ -265,20 +269,14 @@
 
     {{-- 4. GRAFIK & AKTIVITAS --}}
     <div class="row">
-        {{-- Chart --}}
-        <div class="col-lg-8 mb-4">
-            <div class="card card-premium shadow mb-4 chart-container-card bg-soft-cream">
-                <div
-                    class="card-header py-3 bg-transparent border-bottom-0 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-brown">Grafik Pendapatan</h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                    </div>
+        {{-- Chart Pendapatan --}}
+        <div class="col-lg-6 mb-3">
+            <div class="card card-premium shadow mb-3 bg-soft-cream">
+                <div class="card-header py-2 bg-transparent border-bottom-0">
+                    <h6 class="m-0 font-weight-bold text-brown" style="font-size: 0.9rem;">Grafik Pendapatan</h6>
                 </div>
                 <div class="card-body">
-                    <div class="chart-area" style="height: 250px;">
+                    <div class="chart-area" style="height: 180px;">
                         <canvas id="salesChart"></canvas>
                     </div>
                 </div>
@@ -286,25 +284,19 @@
         </div>
 
         {{-- Pie Chart / Aktivitas --}}
-        <div class="col-lg-4 mb-4">
-            <div class="card card-premium shadow mb-4 bg-soft-cream">
-                <div class="card-header py-3 bg-transparent border-bottom-0">
-                    <h6 class="m-0 font-weight-bold text-brown">Kategori Terlaris</h6>
+        <div class="col-lg-6 mb-3">
+            <div class="card card-premium shadow mb-3 bg-soft-cream">
+                <div class="card-header py-2 bg-transparent border-bottom-0">
+                    <h6 class="m-0 font-weight-bold text-brown" style="font-size: 0.9rem;">Kategori Terlaris</h6>
                 </div>
                 <div class="card-body">
-                    <div class="chart-pie pt-2 pb-2" style="height: 250px;">
+                    <div class="chart-pie pt-1 pb-1" style="height: 180px;">
                         <canvas id="categoryChart"></canvas>
                     </div>
-                    <div class="mt-2 text-center small">
-                        <span class="mr-2">
-                            <i class="fas fa-circle" style="color: #6D4C41"></i> Kopi
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle" style="color: #FFC107"></i> Makanan
-                        </span>
-                        <span class="mr-2">
-                            <i class="fas fa-circle" style="color: #1cc88a"></i> Minuman
-                        </span>
+                    <div class="mt-2 text-center small" style="font-size: 0.75rem;">
+                        <span class="mx-1"><i class="fas fa-circle" style="color: #6D4C41"></i> Kopi</span>
+                        <span class="mx-1"><i class="fas fa-circle" style="color: #FFC107"></i> Makanan</span>
+                        <span class="mx-1"><i class="fas fa-circle" style="color: #1cc88a"></i> Minuman</span>
                     </div>
                 </div>
             </div>

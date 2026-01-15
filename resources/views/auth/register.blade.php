@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Jinemo Restoran Prasmanan</title>
+    <title>Daftar Akun - Jinemo Restoran Prasmanan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -39,6 +39,16 @@
             background-color: #5D4037;
             border-color: #5D4037;
         }
+
+        .form-link {
+            color: #6D4C41;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .form-link:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -48,7 +58,7 @@
             <div class="col-md-5">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="mb-0">Jinemo Restoran Prasmanan</h3>
+                        <h3 class="mb-0">Daftar Akun Baru</h3>
                     </div>
                     <div class="card-body p-4">
                         @if ($errors->any())
@@ -61,25 +71,34 @@
                             </div>
                         @endif
 
-                        <form method="POST" action="{{ route('login') }}">
+                        <form method="POST" action="{{ route('register') }}">
                             @csrf
                             <div class="mb-3">
-                                <label for="email" class="form-label">Email Address</label>
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" class="form-control" id="name" name="name"
+                                    value="{{ old('name') }}" required autofocus>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Alamat Email</label>
                                 <input type="email" class="form-control" id="email" name="email"
-                                    value="{{ old('email') }}" required autofocus>
+                                    value="{{ old('email') }}" required>
                             </div>
                             <div class="mb-3">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" required>
                             </div>
-                            <div class="d-grid">
-                                <button type="submit" class="btn btn-primary btn-lg">Login</button>
+                            <div class="mb-3">
+                                <label for="password-confirm" class="form-label">Konfirmasi Password</label>
+                                <input type="password" class="form-control" id="password-confirm" name="password_confirmation" required>
                             </div>
 
-                            <div class="text-center mt-3">
-                                <span>Belum punya akun? </span>
-                                <a href="{{ route('register') }}"
-                                    style="color: #6D4C41; text-decoration: none; font-weight: 500;">Daftar Sekarang</a>
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-primary btn-lg">Daftar Sekarang</button>
+                            </div>
+
+                            <div class="text-center">
+                                <span>Sudah punya akun? </span>
+                                <a href="{{ route('login') }}" class="form-link">Login disini</a>
                             </div>
                         </form>
                     </div>

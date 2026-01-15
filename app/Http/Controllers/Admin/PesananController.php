@@ -28,4 +28,17 @@ class PesananController extends Controller
 
         return redirect()->back()->with('success', 'Status pesanan berhasil diperbarui!');
     }
+
+    public function destroy($id)
+    {
+        $pesanan = Pesanan::findOrFail($id);
+
+        // Use database transaction to ensure both order and details are deleted
+        \Illuminate\Support\Facades\DB::transaction(function () use ($pesanan) {
+            $pesanan->details()->delete();
+            $pesanan->delete();
+        });
+
+        return redirect()->back()->with('success', 'Pesanan berhasil dihapus!');
+    }
 }

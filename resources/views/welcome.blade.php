@@ -159,23 +159,19 @@
                         </a>
                     </li>
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link text-dark" href="#" id="navbarDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-lg p-2"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 mt-2"
-                            aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item py-2 fw-medium" href="#"><i
-                                        class="fas fa-home me-2 text-warning"></i> Home</a></li>
-                            <li><a class="dropdown-item py-2 fw-medium" href="#menu"><i
-                                        class="fas fa-utensils me-2 text-warning"></i> Menu Kami</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            @auth
+                    @auth
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark fw-bold" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle me-1 text-warning"></i> {{ Auth::user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 rounded-3 mt-2"
+                                aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item py-2 fw-medium" href="{{ route('admin.dashboard') }}"><i
                                             class="fas fa-chart-line me-2 text-primary"></i> Dashboard</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
                                 <li>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
@@ -183,12 +179,18 @@
                                                 class="fas fa-sign-out-alt me-2"></i> Logout</button>
                                     </form>
                                 </li>
-                            @else
-                                <li><a class="dropdown-item py-2 fw-medium" href="{{ route('login') }}"><i
-                                            class="fas fa-sign-in-alt me-2 text-success"></i> Login</a></li>
-                            @endauth
-                        </ul>
-                    </li>
+                            </ul>
+                        </li>
+                    @else
+                        <li class="nav-item me-2">
+                            <a class="btn btn-outline-warning text-dark fw-bold rounded-pill px-3"
+                                href="{{ route('login') }}">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-warning text-white fw-bold rounded-pill px-3" href="{{ route('register') }}"
+                                style="background-color: #FFC107; color: #3E2723 !important;">Daftar</a>
+                        </li>
+                    @endauth
                 </ul>
             </div>
         </div>
@@ -342,7 +344,9 @@
                 </div>
             </div>
             <div class="border-top border-secondary mt-4 pt-4 text-center small text-white-50">
-                &copy; {{ date('Y') }} Jinemo Restoran Prasmanan. All rights reserved.
+                &copy; {{ date('Y') }} Jinemo Restoran Prasmanan. All rights reserved. | <a
+                    href="https://github.com/fenditusagung/Jinemo.git" target="_blank" class="text-warning">GitHub
+                    Repo</a>
             </div>
         </div>
     </footer>

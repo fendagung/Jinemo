@@ -75,7 +75,16 @@
                 <a href="{{ route('admin.sosmed') }}"><i class="fas fa-share-alt me-2"></i> Integrasi Sosial Media</a>
             </li>
             <li class="mt-3 pt-3 border-top">
-                <a href="{{ url('/') }}" target="_blank"><i class="fas fa-home me-2"></i> Lihat Website</a>
+                <a href="{{ url('/') }}"><i class="fas fa-home me-2"></i> Home</a>
+            </li>
+            <li>
+                <form action="{{ route('logout') }}" method="POST" id="logout-form-admin" style="display: none;">
+                    @csrf
+                </form>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form-admin').submit();"
+                    class="text-danger">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                </a>
             </li>
         </ul>
     </div>
@@ -90,6 +99,11 @@
             <div class="copyright text-center my-auto">
                 <span>
                     &copy; 2025 Jinemmo Restoran Prasmanan Yogyakarta - E-Business System
+                </span>
+                <br>
+                <span>
+                    Source Code: <a href="https://github.com/fenditusagung/Jinemo.git" target="_blank"
+                        style="color: #FFC107; text-decoration: underline;">https://github.com/fenditusagung/Jinemo.git</a>
                 </span>
                 <br>
                 <span>
